@@ -3,6 +3,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pearsonux.sfo2.cdn.digitaloceanspaces.com/css/pso-design.css" />
+    <link rel="stylesheet" href="assets/custom.css" />
     <!-- load tippy -->
     <script src="https://unpkg.com/tippy.js@4"></script>
  <!-- Moment JS dependancy - needed for datepicker, timepicker, and the full build -->
@@ -15,24 +16,31 @@
  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
  <!-- Load all the components -->
-<script src="https://unpkg.com/@pearson-ux/pearson-web-components"></script>
+ <script src="https://unpkg.com/@pearson-ux/header"></script>
+ <script src="https://unpkg.com/@pearson-ux/footer"></script>
 </head>
 <body>
 
-  <div style="width:100%">
+  <div class="tp-header" style="width:100%">
     <pearson-header logolink="http://www.pearson.com" theme="light"> </pearson-header>
 </div>
         <main class="container">
           <div class="row">
             <div class="col-8">
-              <h2 id="heading"></h2>
+              <h1>Quiz: Week 3</h1>
+              <h3 id="heading"></h3>
               <hr>
               <div id="quiz"></div>
               <div id="resulting"></div>
+              <hr>
               <button id="grade" class="gr-btn extra-large" type="button">Submit</button>
             </div>
             <div class="col-4" id="jump">
-              <div id="qJump"></div>
+              <h1>Questions</h1>
+              <ul id="qJump"></ul>
+              <div class="timer">
+                <strong>Start time:</strong><span id="timer"></span>
+              </div>
             </div>
         </div>
           <!-- place your app markup here -->

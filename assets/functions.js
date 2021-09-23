@@ -1,6 +1,7 @@
 (function(){
     'use strict';
     const quiz = document.getElementById('quiz');
+    const jpMenu = document.getElementById('qJump');
     const resulting = document.getElementById('results');
     const button = document.querySelector('#grade');
     const hd = document.getElementById('heading');
@@ -90,17 +91,46 @@
                 );
             }
             output.push(
-                `<div class="question" data-target="jp-${ct}">${ct}.  ${q.question}</div>
+                `<div class="question" id="jp-${ct}">${ct}.  ${q.question}</div>
                  <div class="answer">${answers.join('<br>')}</div>
                  <div class="alert">${q.alrtErr}</div>`
             );
-                    hd.innerHTML = q.subject;
+            hd.innerHTML = q.subject;
 
         });
         quiz.innerHTML = output.join('');
+        createJump(data);
+    }
+    function createJump(data) {
+        const links = [];
+        data.forEach((q,idx) => {
+            let ct = idx+1;
+            links.push(
+                `<li><a title="${q.question}" href="#jp-${ct}">Question ${ct}</a></li>`
+            );
+
+        });
+        qJump.innerHTML = links.join('');
 
     }
     function grade(){
 
     }
+
+    window.onload = function() {
+        const startTimer = document.getElementById('timer');
+        var incrementSecond = function () {
+          window.secondsPassed += 1;
+          startTimer.innerHTML = window.secondsPassed;
+        }
+      
+        window.secondsPassed = 0;
+        window.myTimer = setInterval(incrementSecond, 1000);
+      }
+      var onSubmitClick = function() {
+        window.clearInterval(window.myTimer); // always clean resources
+        // call some other function to do the submit
+      }
+ 
+
 }())
