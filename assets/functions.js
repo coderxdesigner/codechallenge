@@ -3,6 +3,7 @@
     const quiz = document.getElementById('quiz');
     const resulting = document.getElementById('results');
     const button = document.querySelector('#grade');
+    const hd = document.getElementById('heading');
     button.addEventListener('submit',grade);
     const quizlet = [
         {
@@ -80,8 +81,6 @@
         data.forEach((q,idx) => {
             let ct = idx+1;
             const answers = [];
-        
-
             for (var letter in q.answers) {
                 answers.push(
                     `<label>
@@ -91,11 +90,12 @@
                 );
             }
             output.push(
-                `<div class="question data-target="jp-${ct}">${ct}.  ${q.question}</div>
+                `<div class="question" data-target="jp-${ct}">${ct}.  ${q.question}</div>
                  <div class="answer">${answers.join('<br>')}</div>
                  <div class="alert">${q.alrtErr}</div>`
             );
-            
+                    hd.innerHTML = q.subject;
+
         });
         quiz.innerHTML = output.join('');
 
