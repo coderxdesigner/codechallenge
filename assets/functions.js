@@ -2,9 +2,8 @@
     'use strict';
     const quiz = document.getElementById('quiz');
     const resulting = document.getElementById('results');
-    //const button = document.querySelector('#grade');
-   // console.log(button)
-   // button.addEventListener('submit',grade);
+    const button = document.querySelector('#grade');
+    button.addEventListener('submit',grade);
     const quizlet = [
         {
           question: "How many questions are on this quiz?",
@@ -17,7 +16,7 @@
           answerKey: "d",
           display: true,
           subject: "Life Science",
-          alert: "The answer you selected is incorrect.  Please go back and review the number of questions."
+          alrtErr: "The answer you selected is incorrect.  Please go back and review the number of questions."
         },
         {
           question: "Is today Friday?",
@@ -30,7 +29,7 @@
           answerKey: "a",
           display: true,
           subject: "Life Science",
-          alert: "The answer you selected is incorrect, you may want to check your calendar."
+          alrtErr: "The answer you selected is incorrect, you may want to check your calendar."
         },
         {
           question: "Which season is the best?",
@@ -43,7 +42,7 @@
           answerKey: "c",
           display: true,
           subject: "Life Science",
-          alert: "Incorrect, please go back and review the seasons."
+          alrtErr: "Incorrect, please go back and review the seasons."
       
         },
         {
@@ -57,7 +56,7 @@
           answerKey: "a",
           display: true,
           subject: "Life Science",
-          alert: "Incorrect, please find your nearest bakery and have some dessert."
+          alrtErr: "Incorrect, please find your nearest bakery and have some dessert."
       
         },
         {
@@ -71,31 +70,32 @@
             answerKey: "c",
             display: true,
             subject: "Life Science",
-            alert: "Incorrect, please find your nearest bakery and have some dessert."
+            alrtErr: "Incorrect, please find your nearest bakery and have some dessert."
         
           }
       ];
     createQuiz(quizlet);
-
     function createQuiz(data){
         const output = [];
         data.forEach((q,idx) => {
+            let ct = idx+1;
             const answers = [];
-            let letter = q.answer;
-            for (letter in q.answers) {
+        
+
+            for (var letter in q.answers) {
                 answers.push(
                     `<label>
                         <input type="radio" name="question${idx}" value="${letter}">
-                        ${letter} :
-                        ${q.answers}
+                        ${q.answers[letter]}
                     </label>`
                 );
             }
             output.push(
-                `<div class="question">${q.question}</div>
-                 <div class="answer">${answers.join('')}</div>`
+                `<div class="question data-target="jp-${ct}">${ct}.  ${q.question}</div>
+                 <div class="answer">${answers.join('<br>')}</div>
+                 <div class="alert">${q.alrtErr}</div>`
             );
-
+            
         });
         quiz.innerHTML = output.join('');
 
