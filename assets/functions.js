@@ -1,11 +1,5 @@
 (function(){
     'use strict';
-    const quiz = document.getElementById('quiz');
-    const jpMenu = document.getElementById('qJump');
-    const resulting = document.getElementById('results');
-    const button = document.querySelector('#grade');
-    const hd = document.getElementById('heading');
-    button.addEventListener('submit',grade);
     const quizlet = [
         {
           question: "How many questions are on this quiz?",
@@ -76,6 +70,14 @@
         
           }
       ];
+
+    const quiz = document.getElementById('quiz');
+    const jpMenu = document.getElementById('qJump');
+    const resulting = document.getElementById('results');
+    const button = document.querySelector('#grade');
+    const hd = document.getElementById('heading');
+    button.addEventListener('submit',grade(quizlet));
+ 
     createQuiz(quizlet);
     function createQuiz(data){
         const output = [];
@@ -92,7 +94,7 @@
             }
             output.push(
                 `<div class="question" id="jp-${ct}">${ct}.  ${q.question}</div>
-                 <div class="answer">${answers.join('<br>')}</div>
+                 <div class="answers">${answers.join('<br>')}</div>
                  <div class="alert">${q.alrtErr}</div>`
             );
             hd.innerHTML = q.subject;
@@ -111,26 +113,47 @@
 
         });
         qJump.innerHTML = links.join('');
+        timeStamp();
 
     }
-    function grade(){
+    function grade(data){
 
-    }
-
-    window.onload = function() {
-        const startTimer = document.getElementById('timer');
-        var incrementSecond = function () {
-          window.secondsPassed += 1;
-          startTimer.innerHTML = window.secondsPassed;
-        }
+        // gather answer containers from our quiz
+        const answerContainers = document.querySelectorAll('.answers');
       
-        window.secondsPassed = 0;
-        window.myTimer = setInterval(incrementSecond, 1000);
+        // keep track of user's answers
+        let numCorrect = 0;
+      
+        // for each question...
+        data.forEach( (q, idx) => {
+      
+          // find selected answer
+          const answerContainer = answerContainers[idx];
+          const selector = `input[name=question${idx}]:checked`;
+          const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+      
+          // if answer is correct
+          if(userAnswer === q.answerKey){
+            // add to the number of correct answers
+            numCorrect++;
+      
+            // color the answers green
+            answerContainers[idx].style.color = 'lightgreen';
+          }
+          // if answer is wrong or blank
+          else{
+            // color the answers red
+            answerContainers[idx].style.color = 'red';
+          }
+        });
+      
+        // show number of correct answers out of total
+        resulting.innerHTML = `${numCorrect} out of ${q.length}`;
       }
-      var onSubmitClick = function() {
-        window.clearInterval(window.myTimer); // always clean resources
-        // call some other function to do the submit
-      }
- 
+
+   function timeStamp(){
+    var dt = new Date();
+    document.getElementById('timer').innerHTML = dt;
+   }
 
 }())
