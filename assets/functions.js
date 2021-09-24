@@ -1,5 +1,6 @@
 (function(){
     'use strict';
+    // data used for the test
     const quizlet = [
         {
           question: "How many questions are on this quiz?",
@@ -70,14 +71,13 @@
         
           }
       ];
-
+    // variables to add to the dom
     const quiz = document.getElementById('quiz');
-    const jpMenu = document.getElementById('qJump');
     const btn = document.getElementById('grade');
     const hd = document.getElementById('heading');
-    //btn.addEventListener('click',grade(quizlet))
+    // kicks off the grading process
     btn.addEventListener("click", function() { grade(quizlet); }, false);
-
+    // draws the quiz
     createQuiz(quizlet);
     function createQuiz(data){
         const output = [];
@@ -93,14 +93,14 @@
                 );
             }
             output.push(
-                `<div class="question" id="jp-${ct}">${ct}.  ${q.question}</div>
-                 <div class="answers">${answers.join('<br>')}</div>
-                 <div class="alert">${q.alrtErr}</div>`
+                `<div class="question" id="jp-${idx}">${ct}.  ${q.question}</div>
+                <div class="answers">${answers.join('<br>')}</div>
+                <div class="alert">${q.alrtErr}</div>`
             );
             hd.innerHTML = q.subject;
-
         });
         quiz.innerHTML = output.join('');
+        // creates a side menu to jump to sections
         createJump(data);
     }
     function createJump(data) {
@@ -108,48 +108,45 @@
         data.forEach((q,idx) => {
             let ct = idx+1;
             links.push(
-                `<li><a title="${q.question}" href="#jp-${ct}">Question ${ct}</a></li>`
+                `<li><a title="${q.question}" href="#jp-${idx}">Question ${ct}</a></li>`
             );
-
         });
         qJump.innerHTML = links.join('');
+        // adds a timestap to the page
         timeStamp();
-
     }
-    
+    // checks the radio buttons to grade the page
     function grade(data){
         const resulting = document.getElementById('resulting');
         const answerContainers = document.querySelectorAll('.answers');
         let correct = 0;
-        let ct = 1;
-        data.forEach( (q, idx) => {
+        data.forEach( (q, idx) => {let ct = 1;
             const answerWrapper = answerContainers[idx];
-            const questions = `#jp-${ct}`;
+            const questions = `#jp-${idx}`;
             const qst = document.querySelector(questions)
             const selector = `input[id=question${idx}]:checked`;
             const userAnswer = (answerWrapper.querySelector(selector) || {}).value;
-            if(userAnswer === q.answerKey){
-                // add to the number of correct answers
+            //correct answers
+            if (userAnswer === q.answerKey){
                 correct++;
-          
-                // color the answers green
-                qst.classList.add = 'correct';
+                qst.classList.add('correct');
               }
-              // if answer is wrong or blank
-              else{
-                // color the answers red
-                qst.classList.add = 'wrong';
-              }
-            });
-          
-            // show number of correct answers out of total
-            resulting.innerHTML = "Great Job";
-
+            // incorrect answers
+            else {
+                qst.classList.add('wrong');
+                let alts = qst.nextElementSibling.nextElementSibling;
+                alts.classList.add('active');
+            }
+        });
+        const dt = new Date();
+        const final = correct*20;
+        document.getElementById('complete').innerHTML = `<div><strong>Time completed:</strong><br> ${dt}</div>`;
+        resulting.innerHTML = `<strong>Final Grade: ${final}%</strong>`;
     }
 
    function timeStamp(){
-    var dt = new Date();
-    document.getElementById('timer').innerHTML = dt;
+        const dt = new Date();
+        document.getElementById('timer').innerHTML = dt;
    }
 
 }())

@@ -1,3 +1,4 @@
+<html>
 <head>
     <title>Quiz Application</title>
     <!-- CSS -->
@@ -31,45 +32,26 @@
               <hr>
               <form>
                 <div id="quiz"></div>
-                <div id="resulting"></div>
                 <hr>
                 <button id="grade" class="gr-btn extra-large" type="button">Submit</button>
               </form>
             </div>
             <div class="col-4" id="jump">
-              <h1>Questions</h1>
+              <div class="blue"><h4 class="pl-1">Quiz Details</h4></div>
               <ul id="qJump"></ul>
-              <div class="due"><strong>Assignment due:</strong> 09/23/2021</div>
-              <div class="timer">
-                <strong>Start time:</strong><div id="timer"></div>
+              <div class="activity-wrapper">
+                <div class="due pt-2"><strong>Assignment due:</strong> 09/23/2021</div>
+                <div class="timer pt-2">
+                  <strong>Start time:</strong><div id="timer"></div>
+                </div>
+                <div class="pt-2" id="complete"></div>
+                <div class="pt-2" id="resulting"></div>
               </div>
             </div>
         </div>
           <!-- place your app markup here -->
     </main>
     <pearson-footer/>
-    <!-- load icons -->
-    <script>
-    (function (win, doc) {
-        'use strict';
-        doc.addEventListener("DOMContentLoaded", function(){
-          if (!document.getElementById('pe-icons-sprite')) {
-            var pe_ajax = new XMLHttpRequest();
-            pe_ajax.open("GET", "https://pearsonux.sfo2.cdn.digitaloceanspaces.com/css/p-icons-sprite-1.1.svg", true);
-            pe_ajax.responseType = "document";
-            pe_ajax.onload = function(e) {
-              document.body.insertBefore(
-                      pe_ajax.responseXML.documentElement,
-                      document.body.childNodes[0]
-              );
-              const events = new Event('iconsLoaded');
-              document.dispatchEvent(events);
-            };
-            pe_ajax.send();
-          }
-        });
-      })(window, document)
-    </script>
-     <script src="assets/functions.js"></script>
-
+    <script src="assets/functions.js"></script>
 </body>
+</html>
