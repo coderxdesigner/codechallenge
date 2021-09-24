@@ -73,11 +73,11 @@
 
     const quiz = document.getElementById('quiz');
     const jpMenu = document.getElementById('qJump');
-    const resulting = document.getElementById('results');
-    const button = document.querySelector('#grade');
+    const btn = document.getElementById('grade');
     const hd = document.getElementById('heading');
-    button.addEventListener('submit',grade(quizlet));
- 
+    //btn.addEventListener('click',grade(quizlet))
+    btn.addEventListener("click", function() { grade(quizlet); }, false);
+
     createQuiz(quizlet);
     function createQuiz(data){
         const output = [];
@@ -87,7 +87,7 @@
             for (var letter in q.answers) {
                 answers.push(
                     `<label>
-                        <input type="radio" name="question${idx}" value="${letter}">
+                        <input type="radio" name="question${idx}" id="question${idx}" value="${letter}">
                         ${q.answers[letter]}
                     </label>`
                 );
@@ -116,40 +116,36 @@
         timeStamp();
 
     }
+    
     function grade(data){
-
-        // gather answer containers from our quiz
+        const resulting = document.getElementById('resulting');
         const answerContainers = document.querySelectorAll('.answers');
-      
-        // keep track of user's answers
-        let numCorrect = 0;
-      
-        // for each question...
+        let correct = 0;
+        let ct = 1;
         data.forEach( (q, idx) => {
-      
-          // find selected answer
-          const answerContainer = answerContainers[idx];
-          const selector = `input[name=question${idx}]:checked`;
-          const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-      
-          // if answer is correct
-          if(userAnswer === q.answerKey){
-            // add to the number of correct answers
-            numCorrect++;
-      
-            // color the answers green
-            answerContainers[idx].style.color = 'lightgreen';
-          }
-          // if answer is wrong or blank
-          else{
-            // color the answers red
-            answerContainers[idx].style.color = 'red';
-          }
-        });
-      
-        // show number of correct answers out of total
-        resulting.innerHTML = `${numCorrect} out of ${q.length}`;
-      }
+            const answerWrapper = answerContainers[idx];
+            const questions = `#jp-${ct}`;
+            const qst = document.querySelector(questions)
+            const selector = `input[id=question${idx}]:checked`;
+            const userAnswer = (answerWrapper.querySelector(selector) || {}).value;
+            if(userAnswer === q.answerKey){
+                // add to the number of correct answers
+                correct++;
+          
+                // color the answers green
+                qst.classList.add = 'correct';
+              }
+              // if answer is wrong or blank
+              else{
+                // color the answers red
+                qst.classList.add = 'wrong';
+              }
+            });
+          
+            // show number of correct answers out of total
+            resulting.innerHTML = "Great Job";
+
+    }
 
    function timeStamp(){
     var dt = new Date();
