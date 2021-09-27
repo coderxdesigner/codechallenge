@@ -143,7 +143,7 @@
         document.getElementById('complete').innerHTML = `<div><strong>Time completed:</strong><br> ${dt}</div>`;
         resulting.innerHTML = `<strong>Final Grade: ${final}%</strong>`;
     }
-
+// when page first loads
    function timeStamp(){
         const dt = new Date();
         document.getElementById('timer').innerHTML = dt;
